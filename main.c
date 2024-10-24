@@ -3,6 +3,7 @@
 int main(){
     No* produtos;
     int opcao = 0;
+    char sair [2];
     produtos = inicializarLista();
     system("cls");
     exibirBemVindo();
@@ -47,8 +48,15 @@ int main(){
             break;
 
         case 7:
-            printf("\nTem certeza que deseja sair ?(s/n)");
-            free(produtos);
+            printf("\nAo sair todos os dados serao apagados\nTem certeza que deseja sair ?(s/n)");
+            scanf("%s",sair);
+            if (strcmp(sair,"S") == 0  || strcmp(sair,"s") == 0){
+                printf("Bye Bye");
+                free(produtos);
+            }
+            else{
+                opcao = 10;
+            }
             break;
 
         default:
@@ -57,5 +65,4 @@ int main(){
         }
     }
     while (opcao != 7);
-     
 }

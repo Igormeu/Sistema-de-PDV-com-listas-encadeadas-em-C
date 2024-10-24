@@ -33,7 +33,7 @@ void registrarHistorico(No* value,No* lista) {
 }
 
 void registrarAlteracao(No* anterior,No* lista,int opcao) {
-    FILE *file = fopen("registroSaida.txt", "a+");
+    FILE *file = fopen("logModificacoes.txt", "a+");
 
     if (file == NULL) {
         printf("Não foi possível abrir o arquivo\n");
@@ -45,7 +45,7 @@ void registrarAlteracao(No* anterior,No* lista,int opcao) {
             fprintf(file,"O nome de exibicao do código %s foi alterado | %s -> %s",lista->info.cod,anterior->info.nome,lista->info.nome);
             break;
         case 2:
-            fprintf(file,"O quantidade do código %s foi alterado | %d -> %d",lista->info.cod,anterior->info.quant,lista->info.quant);
+            fprintf(file,"A quantidade do código %s foi alterado | %d -> %d",lista->info.cod,anterior->info.quant,lista->info.quant);
             break;
         case 3:
             fprintf(file,"O preco do código %s foi alterado | %.2f -> %.2f",lista->info.cod,anterior->info.preco,lista->info.preco);
@@ -179,6 +179,7 @@ No* saidaItens (No* lista,char codigo[8],int quantidade){
             }
 
             else{
+                printf("\nA saida nao foi registrada");
                 return NULL;
             }
         }
@@ -209,7 +210,7 @@ No* buscarItens (No* lista, char codigo[8]){
         printf("\nO item nao foi encontrado, revise o codigo e tente novamente\n");
         return NULL;
     }
-    
+
     else{
         printf("\n=============Resultado da busca=============\n");
         printf ("\nCodigo: %s\nNome: %s\nQuantidade: %d\nPreco: R$ %.2f",aux->info.cod,aux->info.nome,aux->info.quant,aux->info.preco);
@@ -251,7 +252,7 @@ int atualizarItem (No **lista,char codigo[8]){
             strcpy (regAlter->info.nome,aux->info.nome);
             strcpy (aux->info.nome,nome);
             
-            registrarAlteracao(regAlter,lista,opcao);
+            registrarAlteracao(regAlter,*lista,opcao);
             break;
         
         case 2:
@@ -259,7 +260,7 @@ int atualizarItem (No **lista,char codigo[8]){
             scanf("%d", &quant);
             regAlter->info.quant = aux->info.quant;
             aux->info.quant = quant;
-            registrarAlteracao(regAlter,lista,opcao);
+            registrarAlteracao(regAlter,*lista,opcao);
             break;
 
         case 3:
@@ -267,7 +268,7 @@ int atualizarItem (No **lista,char codigo[8]){
             scanf("%f", &preco);
             regAlter->info.preco = aux->info.preco;
             aux->info.preco = preco;
-            registrarAlteracao(regAlter,lista,opcao);
+            registrarAlteracao(regAlter,*lista,opcao);
             break;
 
         default:
@@ -291,9 +292,8 @@ void exibirBemVindo() {
     printf("*  BBBBBB   EEEEEEEE  M     M      VVV    IIIIIII  N   N N  DDDDDD   OOOOOO  *\n");
     printf("*                                                                            *\n");
     printf("******************************************************************************\n");
-    printf("\n\nFeito por: Igor Stênio Pereira Santos\n\n");
+    printf("\n\nFeito por: Igor Stenio Pereira Santos\nMatricula: 202403930111\n\n");
 }
-
 
 void exibirMenu(){
     printf("\n============MENU============\n");
